@@ -11,8 +11,6 @@ var chalk = require('chalk'),
 var path = require('path');
 
 var process = require('./process');
-var minimist = require('minimist');
-var clsc = require('coalescy');
 var fs = require('fs');
 var codeFrame = require('babel-code-frame');
 
@@ -34,6 +32,11 @@ function pluralize(word, count) {
 var parseBoolEnvVar = function(varName) {
   var env = process.env || { };
   return env[varName] === 'true';
+};
+
+var parseEnvVal = function(varName) {
+  var env = process.env || { };
+  return env[varName];
 };
 
 var subtleLog = function(args) {
@@ -101,14 +104,9 @@ module.exports = function(results) {
 
   var absolutePathsToFile = parseBoolEnvVar('EFF_ABSOLUTE_PATHS');
 
-  var restArgs = process.argv.slice(process.argv.indexOf('--') + 1);
-  var parsedArgs = minimist(restArgs);
-
-  var groupByIssue = parsedArgs['eff-by-issue'];
-  var filterRule = parsedArgs['eff-filter'];
-  var showSource = !parsedArgs['eff-no-source'];
-
-  absolutePathsToFile = clsc(parsedArgs['eff-absolute-paths'], absolutePathsToFile);
+  var groupByIssue = parseBoolEnvVar('EFF_BY_ISSUE');
+  var filterRule = parseEnvVal('EFF_FILTER');
+  var showSource = !parseBoolEnvVar('EFF_NO_SOURCE');
 
   var errorsHash = { };
   var warningsHash = { };

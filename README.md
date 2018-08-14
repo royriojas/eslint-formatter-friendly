@@ -47,7 +47,7 @@ npm i --save-dev eslint-formatter-friendly
    ```javascript
    {
      "scripts": {
-       "eslint": "eslint --format 'node_modules/eslint-formatter-friendly' file1 file2 dir1/ dir2/",
+       "eslint": "eslint --format friendly file1 file2 dir1/ dir2/",
      }
    }
    ```
@@ -57,7 +57,7 @@ npm i --save-dev eslint-formatter-friendly
    ```javascript
    {
      "scripts": {
-       "eslint": "eslint --format node_modules/eslint-formatter-friendly file1 file2 dir1/ dir2/",
+       "eslint": "eslint --format friendly file1 file2 dir1/ dir2/",
      }
    }
    ```
@@ -83,7 +83,7 @@ In the command line
 
 ```bash
 # just make sure you pass the path to the module to the format option of eslint
-eslint.js --format './node_modules/eslint-formatter-friendly/index.js' index.js test/ -c './eslint.json'
+eslint.js --format './friendly/index.js' index.js test/ -c './eslint.json'
 ```
 
 Or as a module
@@ -126,7 +126,7 @@ grunt.initConfig({
     // when using eslint-grunt:
     eslint: {
         options: {
-            formatter: './node_modules/eslint-formatter-friendly'
+            formatter: './friendly'
         }),
         target1: {
             //..
@@ -135,7 +135,7 @@ grunt.initConfig({
     // when using grunt-eslint:
     eslint: {
         options: {
-            format: './node_modules/eslint-formatter-friendly'
+            format: './friendly'
         }),
         target2: {
             //..
@@ -143,40 +143,36 @@ grunt.initConfig({
     }
 });
 ```
-## Formatter parameters
-
-**UPDATE:**
-
-We can pass variables to the formatter using a double dash at the end of the eslint command `-- --eff-by-issue`. So a new flag can be used to group eslint issues by `ruleId` instead as by file. This is useful if you want to fix at once all the errors/warnigs of the same kind.
 
 ~~Eslint [does not support passing parameters to formatters from the cli](https://github.com/eslint/eslint/issues/2989) yet.So in order
 to pass parameters to the formatter we will have to rely on **environment variables**~~
 
-### Command line options
+### ENV Variables
 
-#### --eff-filter
+#### EFF_FILTER=ruleId
 
 Only shows the `errors`/`warnigs` that match the given `ruleId` filter. This option will only filter the reported rules the error and warning counts will be the same as when all rules are reported same as the exit code.
 
 ```bash
-eslint -f node_modules/eslint-formatter-friendly client/**/*.js server/**/*.js -- --eff-by-issue --eff-filter 'global-require' # notice the --
+EFF_FILTER=global-require EFF_BY_ISSUE=true eslint -f friendly client/**/*.js server/**/*.js
 ```
 
-#### --eff-by-issue
+#### EFF_BY_ISSUE
 
 Normally the reporter will group issues by file, which is handy for normal development. But there are some cases where you might want to fix all the errors of a same kind all at once. For those cases this flag can be used to make the reporter group the issues by ruleId.
 
 ```bash
-eslint -f node_modules/eslint-formatter-friendly client/**/*.js server/**/*.js -- --eff-by-issue # notice the --
+EFF_BY_ISSUE=true eslint -f friendly client/**/*.js server/**/*.js
 ```
 
-**Important**: don't forget to add the flag at the end and after `-- ` otherwise it will be interpreted as a eslint parameter and will fail as that parameter is not known to eslint.
+#### EFF_NO_SOURCE
 
-#### --eff-absolute-paths
+By default the reporter will include a block of code to provide context, but we can omit this if we're only interested in the line where the issue is happening. If this is true it will hide the blocks of code.
 
-Same as environment variable `EFF_ABSOLUTE_PATHS`. If set to true the paths will be absolute. Otherwise they will be relative to CWD.
+```bash
+EFF_NO_SOURCE=true eslint -f friendly client/**/*.js server/**/*.js
+```
 
-### ENV Variables
 
 #### `EFF_NO_GRAY`
 

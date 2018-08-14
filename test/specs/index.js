@@ -255,7 +255,7 @@ describe('eslint-friendly-formatter', function() {
     });
   });
 
-  describe('--eff-filter option', function() {
+  describe('EFF_FILTER option', function() {
     var formatter = proxyquire('../..', {
       path: {
         resolve: function(args) {
@@ -268,7 +268,9 @@ describe('eslint-friendly-formatter', function() {
         }
       },
       './process': {
-        argv: ['--', '--eff-filter', 'no-unused-vars'],
+        env: {
+          EFF_FILTER: 'no-unused-vars'
+        },
         cwd: function cwd() {
           return '/path/to/working/directory';
         }
