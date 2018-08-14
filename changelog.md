@@ -1,5 +1,18 @@
 
 # eslint-friendly-formatter - Changelog
+## v6.0.0
+- **Build Scripts Changes**
+  - Release v6.0.0 - [6230019]( https://github.com/royriojas/eslint-formatter-friendly/commit/6230019 ), [Roy Riojas](https://github.com/Roy Riojas), 13/08/2018 20:19:29
+
+    
+- **Bug Fixes**
+  - eslint@5 now validate rest parameters for valid file patterns. Closes [#35](https://github.com/royriojas/eslint-formatter-friendly/issues/35) - [8e75b0b]( https://github.com/royriojas/eslint-formatter-friendly/commit/8e75b0b ), [Roy Riojas](https://github.com/Roy Riojas), 13/08/2018 20:19:19
+
+    
+- **Documentation**
+  - Generate changelog - [a45e7e1]( https://github.com/royriojas/eslint-formatter-friendly/commit/a45e7e1 ), [Roy Riojas](https://github.com/Roy Riojas), 02/08/2018 04:04:21
+
+    
 ## v5.0.0
 - **Build Scripts Changes**
   - Release v5.0.0 - [0603b73]( https://github.com/royriojas/eslint-formatter-friendly/commit/0603b73 ), [Roy Riojas](https://github.com/Roy Riojas), 02/08/2018 04:04:19
