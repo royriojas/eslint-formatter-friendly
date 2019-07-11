@@ -12,7 +12,7 @@ var path = require('path');
 
 var process = require('./process');
 var fs = require('fs');
-var codeFrame = require('babel-code-frame');
+var codeFrameColumns = require('@babel/code-frame').codeFrameColumns;
 
 
 //------------------------------------------------------------------------------
@@ -208,7 +208,14 @@ module.exports = function(results) {
         }
 
         function renderSourceCode() {
-          return showSource ? codeFrame(message.fileSource, message.line, message.column, {
+          const location = {
+            start: {
+              line: message.line,
+              column: message.column
+            }
+          };
+
+          return showSource ? codeFrameColumns(message.fileSource, location, {
             highlightCode: true
           }).split('\n').map(l => '   ' + l).join('\n') : '';
         }

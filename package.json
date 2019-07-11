@@ -68,11 +68,11 @@
     "write": "^0.2.0"
   },
   "dependencies": {
-    "babel-code-frame": "6.26.0",
-    "chalk": "^2.0.1",
-    "extend": "^3.0.0",
-    "strip-ansi": "^4.0.0",
-    "text-table": "^0.2.0"
+    "@babel/code-frame": "7.0.0",
+    "chalk": "2.4.2",
+    "extend": "3.0.2",
+    "strip-ansi": "5.2.0",
+    "text-table": "0.2.0"
   },
   "changelogx": {
     "issueIDRegExp": "#(\\d+)",
