@@ -87,6 +87,18 @@ var printSummary = function(hash, title, method) {
   return res;
 };
 
+var tryParseJSONObject = function(jsonString) {
+  try {
+      var o = JSON.parse(jsonString);
+      if (o && typeof o === "object") {
+          return o;
+      }
+  }
+  catch (e) { }
+
+  return false;
+};
+
 //------------------------------------------------------------------------------
 // Public Interface
 //------------------------------------------------------------------------------
@@ -215,10 +227,13 @@ module.exports = function(results) {
               column: message.column
             }
           };
+          const codeFrameOptions = tryParseJSONObject(getEnvVar("EFF_CODE_FRAME_OPTIONS")) || { highlightCode: true };
 
-          return showSource ? codeFrameColumns(message.fileSource, location, {
-            highlightCode: true
-          }).split('\n').map(l => '   ' + l).join('\n') : '';
+          return showSource ? codeFrame(
+              message.fileSource,
+              location,
+              codeFrameOptions
+            ).split('\n').map(l => '   ' + l).join('\n') : '';
         }
 
         function createLine(arr) {
