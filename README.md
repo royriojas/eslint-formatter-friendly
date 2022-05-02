@@ -206,6 +206,26 @@ Some terminals only support clicking on urls, and editors can be configured to r
 export EFF_EDITOR_SCHEME=editor://open?file={file}&line={line}&column={column}
 ```
 
+#### `EFF_CODE_FRAME_OPTIONS`
+
+This variable allows modifying the format of the code snippets/frames in the reported errors/warnings. The variable is in the form of a stringified JSON object. The [Babel code frame options](https://www.npmjs.com/package/babel-code-frame#options) are allowed as fields in the object.
+
+As an example where only one line of code above and below the error/warning is shown, the following value can be used for the variable:
+
+```bash
+export EFF_CODE_FRAME_OPTIONS='{ "linesAbove": 1, "linesBelow": 1 }'
+```
+
+#### `EFF_RULE_SEARCH_LINK`
+
+When reporting an error/warning, the output will contain a web link to the eslint rule. E.g. `http://eslint.org/docs/rules/global-require`. For rules introduced by an eslint plugin the output will instead contain a link to Google Search, such as `https://google.com/search?q=%40typescript-eslint%2Fprefer-optional-chain`. If a different search engine or a direct link to another webpage is preferred, this environment variable can be used to change the prefix in front of the rule name in the link.
+
+To link to the Duck Duck Go search engine instead, the following example can be used:
+
+```bash
+export EFF_RULE_SEARCH_LINK='https://duckduckgo.com/?q='
+```
+
 ## [Changelog](./changelog.md)
 
 ## License
