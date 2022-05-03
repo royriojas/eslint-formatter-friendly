@@ -58,7 +58,8 @@ var getFileLink = function(_path, line, column) {
 
 var getKeyLink = function(key) {
   var noLinkRules = parseBoolEnvVar('EFF_NO_LINK_RULES');
-  var url = key.indexOf('/') > -1 ? 'https://google.com/#q=' : 'http://eslint.org/docs/rules/';
+  let searchEngineLink = getEnvVar('EFF_RULE_SEARCH_LINK') || 'https://google.com/search?q=';
+  var url = key.indexOf('/') > -1 ? searchEngineLink : 'http://eslint.org/docs/rules/';
   return (!noLinkRules) ? chalk.underline(subtleLog(url + chalk.white(encodeURIComponent(key)))) : chalk.white(key);
 };
 
@@ -84,6 +85,18 @@ var printSummary = function(hash, title, method) {
       }
     });
   return res;
+};
+
+var tryParseJSONObject = function(jsonString) {
+  try {
+      var o = JSON.parse(jsonString);
+      if (o && typeof o === "object") {
+          return o;
+      }
+  }
+  catch (e) { }
+
+  return false;
 };
 
 //------------------------------------------------------------------------------
@@ -214,10 +227,13 @@ module.exports = function(results) {
               column: message.column
             }
           };
+          const codeFrameOptions = tryParseJSONObject(getEnvVar("EFF_CODE_FRAME_OPTIONS")) || { highlightCode: true };
 
-          return showSource ? codeFrameColumns(message.fileSource, location, {
-            highlightCode: true
-          }).split('\n').map(l => '   ' + l).join('\n') : '';
+          return showSource ? codeFrame(
+              message.fileSource,
+              location,
+              codeFrameOptions
+            ).split('\n').map(l => '   ' + l).join('\n') : '';
         }
 
         function createLine(arr) {
