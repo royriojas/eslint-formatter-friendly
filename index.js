@@ -229,7 +229,7 @@ module.exports = function(results) {
           };
           const codeFrameOptions = tryParseJSONObject(getEnvVar("EFF_CODE_FRAME_OPTIONS")) || { highlightCode: true };
 
-          return showSource ? codeFrame(
+          return showSource ? codeFrameColumns(
               message.fileSource,
               location,
               codeFrameOptions
